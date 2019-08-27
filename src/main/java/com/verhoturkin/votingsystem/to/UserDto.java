@@ -1,6 +1,6 @@
 package com.verhoturkin.votingsystem.to;
 
-public class UserDto {
+public class UserDto extends BaseDto{
 
     private String name;
 
