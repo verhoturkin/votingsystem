@@ -1,0 +1,2 @@
+# votingsystem
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5376e4d351ef439ab170f82d26e3f644)](https://app.codacy.com/app/verhoturkin/votingsystem?utm_source=github.com&utm_medium=referral&utm_content=verhoturkin/votingsystem&utm_campaign=Badge_Grade_Settings)
