@@ -4,7 +4,7 @@ import com.verhoturkin.votingsystem.model.Role;
 import com.verhoturkin.votingsystem.model.User;
 import com.verhoturkin.votingsystem.repository.UserRepository;
 import com.verhoturkin.votingsystem.to.UserDto;
-import com.verhoturkin.votingsystem.util.NotFoundException;
+import com.verhoturkin.votingsystem.util.exception.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;

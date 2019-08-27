@@ -1,6 +1,6 @@
 package com.verhoturkin.votingsystem.web;
 
-import com.verhoturkin.votingsystem.util.NotFoundException;
+import com.verhoturkin.votingsystem.util.exception.NotFoundException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
