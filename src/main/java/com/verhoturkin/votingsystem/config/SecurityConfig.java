@@ -2,7 +2,6 @@ package com.verhoturkin.votingsystem.config;
 
 
 import com.verhoturkin.votingsystem.web.RestAuthenticationEntryPoint;
-import com.verhoturkin.votingsystem.web.RestResponseExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,12 +19,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService detailsService;
-    private final RestResponseExceptionHandler responseExceptionHandler;
+
 
     @Autowired
-    public SecurityConfig(UserDetailsService detailsService, RestResponseExceptionHandler responseExceptionHandler) {
+    public SecurityConfig(UserDetailsService detailsService) {
         this.detailsService = detailsService;
-        this.responseExceptionHandler = responseExceptionHandler;
+
     }
 
     @Override

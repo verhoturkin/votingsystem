@@ -23,7 +23,6 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 import static org.hibernate.cfg.AvailableSettings.*;
-import static org.hibernate.cfg.AvailableSettings.DIALECT;
 
 @Configuration
 @EnableTransactionManagement
