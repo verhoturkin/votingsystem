@@ -4,14 +4,14 @@
     <!-- To enable JMX Management -->
     <jmxConfigurator/>
 
-<!--    <appender name="file" class="ch.qos.logback.core.FileAppender">-->
-<!--        <file>${TOPJAVA_ROOT}/log/rest-voting.log</file>-->
+    <!--    <appender name="file" class="ch.qos.logback.core.FileAppender">-->
+    <!--        <file>${TOPJAVA_ROOT}/log/rest-voting.log</file>-->
 
-<!--        <encoder>-->
-<!--            <charset>UTF-8</charset>-->
-<!--            <pattern>%date %-5level %logger{50}.%M:%L - %msg%n</pattern>-->
-<!--        </encoder>-->
-<!--    </appender>-->
+    <!--        <encoder>-->
+    <!--            <charset>UTF-8</charset>-->
+    <!--            <pattern>%date %-5level %logger{50}.%M:%L - %msg%n</pattern>-->
+    <!--        </encoder>-->
+    <!--    </appender>-->
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -21,7 +21,7 @@
     </appender>
 
     <logger name="com.verhoturkin.votingsystem" level="debug"/>
-    <!--    <logger name="org.springframework.web.servlet" level="debug"/>-->
+    <!--    <logger name="org.springframework.security.web" level="debug"/>-->
     <!--    <logger name="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver" level="debug"/>-->
 
     <root level="info">
