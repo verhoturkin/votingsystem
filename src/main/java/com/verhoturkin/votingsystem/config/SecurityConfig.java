@@ -20,7 +20,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService detailsService;
 
-
     @Autowired
     public SecurityConfig(UserDetailsService detailsService) {
         this.detailsService = detailsService;
@@ -31,8 +30,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/**/users/**/").hasRole("ADMIN")
-                .antMatchers("/v1/**").authenticated()
+                .antMatchers("/**/register").anonymous()
+                .antMatchers("/**/profile").authenticated()
+                .antMatchers("/**/users").hasRole("ADMIN")
                 .and().httpBasic().authenticationEntryPoint(restAuthEntryPoint())
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
