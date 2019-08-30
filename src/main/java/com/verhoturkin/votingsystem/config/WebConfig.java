@@ -11,8 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ComponentScan("com.verhoturkin.**.web")
 public class WebConfig implements WebMvcConfigurer {
 
-    public static final String REST_V1 = "/v1.0";
-    public static final String REST_CURRENT_VERSION = REST_V1;
+    public static final String REST_V1 = "/v1";
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
