@@ -24,14 +24,14 @@ import static com.verhoturkin.votingsystem.config.WebConfig.REST_V1;
 
 @RestController
 @RequestMapping(value = REST_V1 + "/users", produces = MediaType.APPLICATION_JSON_VALUE)
-public class UserAdminController {
+public class UserController {
 
     private final UserRepository repository;
 
     private final ModelMapper modelMapper;
 
     @Autowired
-    public UserAdminController(UserRepository repository, ModelMapper modelMapper) {
+    public UserController(UserRepository repository, ModelMapper modelMapper) {
         this.repository = repository;
         this.modelMapper = modelMapper;
     }
