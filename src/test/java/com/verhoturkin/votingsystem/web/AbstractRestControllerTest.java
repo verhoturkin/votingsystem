@@ -32,9 +32,6 @@ public abstract class AbstractRestControllerTest {
         CHARACTER_ENCODING_FILTER.setForceEncoding(true);
     }
 
-    @Autowired
-    protected UserRepository repository;
-
     protected MockMvc mockMvc;
 
     @Autowired

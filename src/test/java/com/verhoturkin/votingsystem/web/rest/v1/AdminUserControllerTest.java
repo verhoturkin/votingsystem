@@ -1,5 +1,6 @@
 package com.verhoturkin.votingsystem.web.rest.v1;
 
+import com.verhoturkin.votingsystem.repository.UserRepository;
 import com.verhoturkin.votingsystem.to.UserDto;
 import com.verhoturkin.votingsystem.util.exception.NotFoundException;
 import com.verhoturkin.votingsystem.util.mapper.UserMapper;
@@ -25,6 +26,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class AdminUserControllerTest extends AbstractRestControllerTest {
 
     private static final String REST_URL = REST_V1 + "/users/";
+
+    @Autowired
+    protected UserRepository repository;
 
     @Autowired
     private UserMapper mapper;
