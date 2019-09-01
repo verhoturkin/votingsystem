@@ -1,8 +1,10 @@
 package com.verhoturkin.votingsystem.config;
 
+import com.verhoturkin.votingsystem.util.converter.DateTimeFormatters;
 import com.verhoturkin.votingsystem.web.json.JacksonObjectMapper;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -35,4 +37,9 @@ public class WebConfig implements WebMvcConfigurer {
         return converter;
     }
 
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatter(new DateTimeFormatters.LocalDateFormatter());
+        registry.addFormatter(new DateTimeFormatters.LocalTimeFormatter());
+    }
 }
