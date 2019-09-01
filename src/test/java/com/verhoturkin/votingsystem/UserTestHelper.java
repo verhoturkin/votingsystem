@@ -4,7 +4,6 @@ import com.verhoturkin.votingsystem.model.Role;
 import com.verhoturkin.votingsystem.model.User;
 import com.verhoturkin.votingsystem.to.UserDto;
 import com.verhoturkin.votingsystem.web.json.JsonUtil;
-import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ import static com.verhoturkin.votingsystem.model.AbstractBaseEntity.START_SEQ;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class UserTestData {
+public class UserTestHelper {
     public static final int USER1_ID = START_SEQ;
     public static final int USER2_ID = START_SEQ + 1;
     public static final int ADMIN_ID = START_SEQ + 2;

@@ -5,7 +5,6 @@ import com.verhoturkin.votingsystem.config.AppConfig;
 import com.verhoturkin.votingsystem.config.SecurityConfig;
 import com.verhoturkin.votingsystem.model.User;
 import com.verhoturkin.votingsystem.repository.UserRepository;
-import com.verhoturkin.votingsystem.web.rest.v1.UserController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;

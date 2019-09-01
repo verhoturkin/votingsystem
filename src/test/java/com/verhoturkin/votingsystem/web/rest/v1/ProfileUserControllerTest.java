@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.Collectors;
 
-import static com.verhoturkin.votingsystem.UserTestData.*;
+import static com.verhoturkin.votingsystem.UserTestHelper.*;
 import static com.verhoturkin.votingsystem.config.WebConfig.REST_V1;
 import static com.verhoturkin.votingsystem.web.json.JsonUtil.readValue;
 import static com.verhoturkin.votingsystem.web.json.JsonUtil.writeValue;
@@ -81,7 +81,7 @@ public class ProfileUserControllerTest extends AbstractRestControllerTest {
     @Transactional(propagation = Propagation.NEVER)
     void registerDuplicate() throws Exception {
         UserDto expected = new UserDto(null, "New", "user1@yandex.ru", "newPass");
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.post(REST_V1 + "/users/register")
+        mockMvc.perform(MockMvcRequestBuilders.post(REST_V1 + "/users/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonWithPassword(expected, "newPass")))
                 .andDo(print())
@@ -92,7 +92,7 @@ public class ProfileUserControllerTest extends AbstractRestControllerTest {
     @Transactional(propagation = Propagation.NEVER)
     void registerInvalid() throws Exception {
         UserDto expected = new UserDto(null, null, "", "newPass");
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.post(REST_V1 + "/users/register")
+        mockMvc.perform(MockMvcRequestBuilders.post(REST_V1 + "/users/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(writeValue(expected)))
                 .andDo(print())

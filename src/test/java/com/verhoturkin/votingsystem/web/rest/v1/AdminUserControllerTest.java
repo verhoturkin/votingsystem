@@ -1,11 +1,9 @@
 package com.verhoturkin.votingsystem.web.rest.v1;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
 import com.verhoturkin.votingsystem.to.UserDto;
 import com.verhoturkin.votingsystem.util.exception.NotFoundException;
 import com.verhoturkin.votingsystem.util.mapper.UserMapper;
 import com.verhoturkin.votingsystem.web.AbstractRestControllerTest;
-import com.verhoturkin.votingsystem.web.json.JsonUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -16,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.Collectors;
 
-import static com.verhoturkin.votingsystem.UserTestData.*;
+import static com.verhoturkin.votingsystem.UserTestHelper.*;
 import static com.verhoturkin.votingsystem.config.WebConfig.REST_V1;
 import static com.verhoturkin.votingsystem.web.json.JsonUtil.readValue;
 import static com.verhoturkin.votingsystem.web.json.JsonUtil.writeValue;
@@ -38,7 +36,7 @@ class AdminUserControllerTest extends AbstractRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(JsonUtil.writeValue(ADMIN_DTO)));
+                .andExpect(content().json(writeValue(ADMIN_DTO)));
     }
 
     @Test
@@ -82,7 +80,7 @@ class AdminUserControllerTest extends AbstractRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(JsonUtil.writeValue(DTOS)));
+                .andExpect(content().json(writeValue(DTOS)));
     }
 
     @Test
@@ -108,7 +106,7 @@ class AdminUserControllerTest extends AbstractRestControllerTest {
     @Transactional(propagation = Propagation.NEVER)
     void createDuplicate() throws Exception {
         UserDto expected = new UserDto(null, "New", "user1@yandex.ru", "newPass");
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
+        mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
                 .content(jsonWithPassword(expected, "newPass")))
@@ -120,7 +118,7 @@ class AdminUserControllerTest extends AbstractRestControllerTest {
     @Transactional(propagation = Propagation.NEVER)
     void createInvalid() throws Exception {
         UserDto expected = new UserDto(null, null, "", "newPass");
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
+        mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
                 .content(writeValue(expected)))
