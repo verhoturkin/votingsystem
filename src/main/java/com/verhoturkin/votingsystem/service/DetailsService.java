@@ -1,6 +1,5 @@
 package com.verhoturkin.votingsystem.service;
 
-import com.verhoturkin.votingsystem.model.User;
 import com.verhoturkin.votingsystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,11 +19,9 @@ public class DetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = repository.findByEmail(email)
+        return repository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User" + email + "is not found"));
 
-        return new org.springframework.security.core.userdetails.User(user.getName(),
-                user.getPassword(),
-                user.getRoles());
+
     }
 }
