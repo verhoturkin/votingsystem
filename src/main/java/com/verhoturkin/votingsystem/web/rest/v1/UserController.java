@@ -13,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,7 +38,7 @@ public class UserController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<UserDto> create(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> create(@RequestBody @Valid UserDto userDto) {
         UserDto created = mapper.convertToDto(repository.save(mapper.convertToEntity(userDto)));
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_V1 + "/users/{id}")
@@ -65,7 +66,7 @@ public class UserController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@RequestBody UserDto userDto, @PathVariable int id) {
+    public void update(@RequestBody @Valid UserDto userDto, @PathVariable int id) {
         repository.save(mapper.convertToEntity(userDto));
     }
 
@@ -90,7 +91,7 @@ public class UserController {
 
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<UserDto> register(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> register(@RequestBody @Valid UserDto userDto) {
         UserDto created = mapper.convertToDto(repository.save(mapper.convertToEntity(userDto)));
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_V1 + "/users/{id}")
@@ -100,7 +101,7 @@ public class UserController {
 
     @PutMapping(value = "/profile", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateProfile(@RequestBody UserDto userDto, @AuthenticationPrincipal User user) {
+    public void updateProfile(@RequestBody @Valid UserDto userDto, @AuthenticationPrincipal User user) {
         repository.save(mapper.convertToEntity(userDto));
     }
 }

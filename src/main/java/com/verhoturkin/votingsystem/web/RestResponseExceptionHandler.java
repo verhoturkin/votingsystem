@@ -6,6 +6,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.validation.BindException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -24,7 +26,7 @@ public class RestResponseExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ExceptionHandler({DataIntegrityViolationException.class, MethodArgumentNotValidException.class})
     public ResponseEntity databaseError(HttpServletRequest request, Exception e) {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
     }

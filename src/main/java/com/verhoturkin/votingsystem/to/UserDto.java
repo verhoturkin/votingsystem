@@ -2,14 +2,26 @@ package com.verhoturkin.votingsystem.to;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class UserDto extends BaseDto {
+public class UserDto extends BaseDto implements Serializable {
+    private static final long serialVersionUID = 1L;
 
+    @NotBlank
+    @Size(min = 2, max = 100)
     private String name;
 
+    @Email
+    @NotBlank
+    @Size(max = 100)
     private String email;
 
+    @NotBlank
+    @Size(min = 5, max = 32)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 

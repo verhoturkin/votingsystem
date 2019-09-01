@@ -117,6 +117,18 @@ class AdminUserControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void createInvalid() throws Exception {
+        UserDto expected = new UserDto(null, null, "", "newPass");
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(writeValue(expected)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
     void update() throws Exception {
         UserDto updated = new UserDto(USER1_DTO);
         updated.setName("UpdatedUser");
@@ -141,6 +153,20 @@ class AdminUserControllerTest extends AbstractRestControllerTest {
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonWithPassword(updated, "password")))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void updateInvalid() throws Exception {
+        UserDto updated = new UserDto(USER1_DTO);
+        updated.setEmail("");
+        updated.setName(null);
+        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + USER1_ID)
+                .with(userHttpBasic(ADMIN))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(writeValue(updated)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }

@@ -89,6 +89,17 @@ public class ProfileUserControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void registerInvalid() throws Exception {
+        UserDto expected = new UserDto(null, null, "", "newPass");
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.post(REST_V1 + "/users/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(writeValue(expected)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
     void profileUpdate() throws Exception {
         UserDto updated = new UserDto(USER1_DTO);
         updated.setName("UpdatedUser");
@@ -113,6 +124,20 @@ public class ProfileUserControllerTest extends AbstractRestControllerTest {
                 .with(userHttpBasic(USER1))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonWithPassword(updated, "password")))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void profileUpdateInvalid() throws Exception {
+        UserDto updated = new UserDto(USER1_DTO);
+        updated.setName(null);
+        updated.setEmail("");
+        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL)
+                .with(userHttpBasic(USER1))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(writeValue(updated)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
