@@ -1,6 +1,7 @@
 package com.verhoturkin.votingsystem.web;
 
 import com.verhoturkin.votingsystem.util.exception.NotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,5 +22,10 @@ public class RestResponseExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity accessDenied(HttpServletRequest req, Exception e) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity databaseError(HttpServletRequest request, Exception e) {
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
     }
 }
