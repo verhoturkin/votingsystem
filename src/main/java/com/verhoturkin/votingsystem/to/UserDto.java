@@ -41,8 +41,8 @@ public class UserDto extends BaseDto implements Serializable {
         this.password = password;
     }
 
-    public UserDto(UserDto user1Dto) {
-        this(user1Dto.getId(), user1Dto.name, user1Dto.email, user1Dto.password);
+    public UserDto(UserDto u) {
+        this(u.getId(), u.name, u.email, u.password);
     }
 
     public String getName() {
@@ -83,6 +83,6 @@ public class UserDto extends BaseDto implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, email, password);
+        return Objects.hash(id, name, email, password);
     }
 }
