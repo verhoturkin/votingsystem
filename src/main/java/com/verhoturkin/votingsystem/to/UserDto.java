@@ -29,6 +29,10 @@ public class UserDto extends BaseDto {
         this.password = password;
     }
 
+    public UserDto(UserDto user1Dto) {
+        this(user1Dto.getId(), user1Dto.name, user1Dto.email, user1Dto.password);
+    }
+
     public String getName() {
         return name;
     }
