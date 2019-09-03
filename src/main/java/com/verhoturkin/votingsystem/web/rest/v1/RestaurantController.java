@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.verhoturkin.votingsystem.config.WebConfig.REST_V1;
@@ -75,10 +76,11 @@ public class RestaurantController {
 
     //User part
 
-    //TODO change date to .now()
-    @GetMapping(value = "/today", produces = MediaType.APPLICATION_JSON_VALUE)
-    private List<RestaurantWithDishesDto> getToday() {
-        List<Restaurant> restaurants = repository.findAllWithDishes(LocalDate.of(2015, 05, 30));
+    @GetMapping(value = "/menu", produces = MediaType.APPLICATION_JSON_VALUE)
+    private List<RestaurantWithDishesDto> getMenu(@RequestParam(required = false) LocalDate date) {
+        List<Restaurant> restaurants = repository.findAllWithDishes(
+                Objects.isNull(date) ? LocalDate.now() : date);
+
         return restaurants.stream()
                 .map(mapper::convertToDtoWithDishes)
                 .collect(Collectors.toList());
