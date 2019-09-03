@@ -1,7 +1,5 @@
 package com.verhoturkin.votingsystem.config;
 
-import com.verhoturkin.votingsystem.model.Dish;
-import com.verhoturkin.votingsystem.to.DishDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +20,7 @@ public class AppConfig {
                 .setFieldMatchingEnabled(true)
                 .setSkipNullEnabled(true)
                 .setFieldAccessLevel(PRIVATE);
-        mapper.createTypeMap(Dish.class, DishDto.class).addMapping(dish -> dish.getRestaurant().getId(), DishDto::setRestaurant_id);
+        //mapper.createTypeMap(Dish.class, DishDto.class).addMapping(dish -> dish.getRestaurant().getId(), DishDto::setRestaurant_id);
         return mapper;
     }
 }
