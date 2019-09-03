@@ -62,10 +62,10 @@ public class DishDto extends BaseDto {
     @Override
     public String toString() {
         return "DishDto{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ". name='" + name + '\'' +
                 ", date=" + date +
                 ", price=" + price +
-                ", id=" + id +
                 '}';
     }
 

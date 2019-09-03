@@ -85,4 +85,13 @@ public class UserDto extends BaseDto implements Serializable {
     public int hashCode() {
         return Objects.hash(id, name, email, password);
     }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

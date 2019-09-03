@@ -32,14 +32,6 @@ public class Dish extends AbstractNamedEntity {
     public Dish() {
     }
 
-    public Dish(Dish dish) {
-        this(dish.id, dish.name, dish.date, dish.price, dish.restaurant);
-    }
-
-    public Dish(String name, LocalDate date, int price, Restaurant restaurant) {
-        this(null, name, date, price, restaurant);
-    }
-
     public Dish(Integer id, String name, LocalDate date, int price, Restaurant restaurant) {
         super(id, name);
         this.date = date;
@@ -69,5 +61,15 @@ public class Dish extends AbstractNamedEntity {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Dish{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", date=" + date +
+                ", price=" + price +
+                '}';
     }
 }

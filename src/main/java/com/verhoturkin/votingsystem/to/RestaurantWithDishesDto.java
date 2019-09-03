@@ -12,10 +12,6 @@ public class RestaurantWithDishesDto extends RestaurantDto {
     public RestaurantWithDishesDto() {
     }
 
-    public RestaurantWithDishesDto(RestaurantWithDishesDto r) {
-        this(r.getId(), r.getName(), r.getDishes());
-    }
-
     public RestaurantWithDishesDto(Integer id, String name, List<DishDto> dishes) {
         super(id, name);
         this.dishes = dishes;
@@ -32,9 +28,9 @@ public class RestaurantWithDishesDto extends RestaurantDto {
     @Override
     public String toString() {
         return "RestaurantWithDishesDto{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", dishes=" + dishes +
-                ", id=" + id +
                 '}';
     }
 

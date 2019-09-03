@@ -33,8 +33,8 @@ public class RestaurantDto extends BaseDto {
     @Override
     public String toString() {
         return "RestaurantDto{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 '}';
     }
 
