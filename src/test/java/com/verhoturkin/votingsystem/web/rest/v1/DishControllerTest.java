@@ -76,7 +76,7 @@ class DishControllerTest extends AbstractRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(writeValue(DISHES)));
+                .andExpect(content().json(writeValue(DISHES), true));
     }
 
     @Test
@@ -87,7 +87,7 @@ class DishControllerTest extends AbstractRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(writeValue(List.of(DISH2, DISH1))));
+                .andExpect(content().json(writeValue(List.of(DISH2, DISH1)), true));
     }
 
     @Test
@@ -97,7 +97,7 @@ class DishControllerTest extends AbstractRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(writeValue(DISH1)));
+                .andExpect(content().json(writeValue(DISH1), true));
     }
 
     @Test

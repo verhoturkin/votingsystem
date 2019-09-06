@@ -1,10 +1,9 @@
 package com.verhoturkin.votingsystem.web;
 
 
-import com.verhoturkin.votingsystem.config.AppConfig;
+import com.verhoturkin.votingsystem.config.AppConfigTest;
 import com.verhoturkin.votingsystem.config.SecurityConfig;
 import com.verhoturkin.votingsystem.model.User;
-import com.verhoturkin.votingsystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
@@ -20,7 +19,7 @@ import javax.annotation.PostConstruct;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
-@SpringJUnitWebConfig(value = {SecurityConfig.class, AppConfig.class})
+@SpringJUnitWebConfig(value = {SecurityConfig.class, AppConfigTest.class})
 @WebAppConfiguration
 @Transactional
 public abstract class AbstractRestControllerTest {

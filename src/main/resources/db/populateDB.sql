@@ -13,7 +13,6 @@ VALUES ('User1', 'user1@yandex.ru', '{noop}password'),
 INSERT INTO user_roles (role, user_id)
 VALUES ('ROLE_USER', 100000),
        ('ROLE_ADMIN', 100002),
-       ('ROLE_USER', 100002),
        ('ROLE_USER', 100001);
 
 INSERT INTO restaurants (name)
@@ -34,5 +33,5 @@ VALUES ('2015-05-30', 'Биг Мак', 13501, 100003),
 
 INSERT INTO votes (restaurant_id, user_id, date)
 VALUES (100003, 100000, '2015-05-30'),
-       (100004, 100001, '2015-05-30'),
-       (100005, 100002, '2015-05-31');
+       (100004, 100001, '2015-05-31');
+

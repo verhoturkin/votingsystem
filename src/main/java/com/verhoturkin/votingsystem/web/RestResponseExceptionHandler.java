@@ -1,6 +1,7 @@
 package com.verhoturkin.votingsystem.web;
 
 import com.verhoturkin.votingsystem.util.exception.NotFoundException;
+import com.verhoturkin.votingsystem.util.exception.VotingTimeExpiredException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -28,5 +29,10 @@ public class RestResponseExceptionHandler {
     @ExceptionHandler({DataIntegrityViolationException.class, MethodArgumentNotValidException.class})
     public ResponseEntity databaseError(HttpServletRequest request, Exception e) {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+    }
+
+    @ExceptionHandler(VotingTimeExpiredException.class)
+    public ResponseEntity expiredVoteError(HttpServletRequest req, Exception e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 }

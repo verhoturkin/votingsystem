@@ -40,7 +40,7 @@ public class ProfileUserControllerTest extends AbstractRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(writeValue(USER1_DTO)));
+                .andExpect(content().json(writeValue(USER1_DTO), true));
     }
 
     @Test

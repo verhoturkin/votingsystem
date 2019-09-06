@@ -40,7 +40,7 @@ class AdminUserControllerTest extends AbstractRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(writeValue(ADMIN_DTO)));
+                .andExpect(content().json(writeValue(ADMIN_DTO), true));
     }
 
     @Test
@@ -50,7 +50,7 @@ class AdminUserControllerTest extends AbstractRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(writeValue(ADMIN_DTO)));
+                .andExpect(content().json(writeValue(ADMIN_DTO), true));
     }
 
     @Test
@@ -84,7 +84,7 @@ class AdminUserControllerTest extends AbstractRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(writeValue(DTOS)));
+                .andExpect(content().json(writeValue(DTOS), true));
     }
 
     @Test

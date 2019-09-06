@@ -187,5 +187,13 @@ class RestaurantControllerTest extends AbstractRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(writeValue(RESTAURANTS_MENU), true));
+
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "menu")
+                .param("date", "2015-05-30")
+                .with(userHttpBasic(USER1)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(writeValue(RESTAURANTS_MENU), true));
     }
 }
