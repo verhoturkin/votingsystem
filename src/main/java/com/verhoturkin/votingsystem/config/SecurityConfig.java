@@ -35,9 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/**/register").anonymous()
-                .antMatchers("/**/menu").authenticated()
-                .antMatchers("/**/votes/**", "/**/profile").hasRole("USER")
-                .antMatchers("/**/users/**", "/**/restaurants/**").hasRole("ADMIN")
+                .antMatchers("/**/profile", "/**/menu").hasRole("USER")
+                .antMatchers("/**/users/**", "/**/restaurants/*", "/**/dishes/*").hasRole("ADMIN")
                 .and().httpBasic().authenticationEntryPoint(restAuthEntryPoint())
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable();

@@ -1,6 +1,7 @@
 package com.verhoturkin.votingsystem.web.rest.v1;
 
 import com.verhoturkin.votingsystem.model.User;
+import com.verhoturkin.votingsystem.model.Vote;
 import com.verhoturkin.votingsystem.service.VoteService;
 import com.verhoturkin.votingsystem.to.VoteDto;
 import com.verhoturkin.votingsystem.util.mapper.VoteMapper;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.verhoturkin.votingsystem.config.WebConfig.REST_V1;
 
@@ -29,6 +33,25 @@ public class VoteController {
     public VoteController(VoteMapper mapper, VoteService service) {
         this.mapper = mapper;
         this.service = service;
+    }
+
+    //Admin Part
+    @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public List<VoteDto> getAll(@PathVariable int restaurantId) {
+        List<Vote> votes = service.findAllByRestaurantId(restaurantId);
+        return votes.stream()
+                .map(mapper::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/byDate")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public List<VoteDto> getAllByDate(@PathVariable int restaurantId, @RequestParam LocalDate date) {
+        List<Vote> votes = service.findAllByRestaurantIdAndDate(restaurantId, date);
+        return votes.stream()
+                .map(mapper::convertToDto)
+                .collect(Collectors.toList());
     }
 
     //User part
@@ -55,4 +78,5 @@ public class VoteController {
     public long getCount(@PathVariable int restaurantId) {
         return service.getCount(restaurantId);
     }
+
 }

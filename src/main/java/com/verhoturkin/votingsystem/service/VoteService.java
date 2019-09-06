@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Service
 public class VoteService {
@@ -56,5 +57,13 @@ public class VoteService {
 
     public long getCount(int reataurantId) {
         return repository.countByDateAndRestaurantId(LocalDate.now(clock), reataurantId);
+    }
+
+    public List<Vote> findAllByRestaurantId(int restaurantId) {
+        return repository.findAllByRestaurantId(restaurantId);
+    }
+
+    public List<Vote> findAllByRestaurantIdAndDate(int restaurantId, LocalDate date) {
+        return repository.findAllByRestaurantIdAndDate(restaurantId, date);
     }
 }

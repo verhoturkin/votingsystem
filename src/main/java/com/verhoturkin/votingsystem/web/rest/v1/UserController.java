@@ -36,6 +36,7 @@ public class UserController {
 
     // Admin part
 
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<UserDto> create(@RequestBody @Valid UserDto userDto) {

@@ -8,11 +8,11 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static com.verhoturkin.votingsystem.RestaurantTestHelper.RESTAURANT1_ID;
 import static com.verhoturkin.votingsystem.UserTestHelper.*;
-import static com.verhoturkin.votingsystem.VoteTestData.VOTE1;
-import static com.verhoturkin.votingsystem.VoteTestData.assertMatch;
+import static com.verhoturkin.votingsystem.VoteTestData.*;
 import static com.verhoturkin.votingsystem.config.WebConfig.REST_V1;
 import static com.verhoturkin.votingsystem.web.json.JsonUtil.readValue;
 import static com.verhoturkin.votingsystem.web.json.JsonUtil.writeValue;
@@ -23,6 +23,40 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class VoteControllerTest extends AbstractRestControllerTest {
 
     private static final String REST_URL = REST_V1 + "/restaurants/" + RESTAURANT1_ID + "/votes/";
+
+    //Admin part
+
+    @Test
+    void getAll() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL)
+                .with(userHttpBasic(ADMIN)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(writeValue(List.of(VOTE1)), true));
+    }
+
+    @Test
+    void getAllByDate() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "byDate")
+                .with(userHttpBasic(ADMIN))
+                .param("date", "2015-05-30"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(writeValue(List.of(VOTE1)), true));
+    }
+
+    @Test
+    void getAllUnAuth() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL)
+                .with(userHttpBasic(USER1)))
+                .andDo(print())
+                .andExpect(status().isForbidden());
+    }
+
+
+    //User part
 
     @Test
     void create() throws Exception {
