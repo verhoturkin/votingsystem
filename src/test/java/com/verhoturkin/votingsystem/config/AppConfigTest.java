@@ -4,10 +4,17 @@ import com.verhoturkin.votingsystem.model.Vote;
 import com.verhoturkin.votingsystem.to.VoteDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.jcache.JCacheCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import javax.cache.Cache;
+import javax.cache.Caching;
+import javax.cache.configuration.MutableConfiguration;
+import javax.cache.expiry.CreatedExpiryPolicy;
+import javax.cache.expiry.Duration;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -35,5 +42,14 @@ public class AppConfigTest {
     @Bean
     public Clock clock() {
         return Clock.fixed(Instant.parse("2015-05-30T11:15:30.00Z"), ZoneId.of("UTC"));
+    }
+
+    @Bean
+    public CacheManager cacheManager() {
+        MutableConfiguration<Long, String> configuration = new MutableConfiguration<Long, String>()
+                .setExpiryPolicyFactory(CreatedExpiryPolicy.factoryOf(Duration.ONE_DAY));
+        Cache<Long, String> cache = Caching.getCachingProvider().getCacheManager().createCache("restaurants", configuration);
+        return new JCacheCacheManager(Caching.getCachingProvider().getCacheManager());
+
     }
 }
