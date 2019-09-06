@@ -5,14 +5,20 @@ import com.verhoturkin.votingsystem.to.RestaurantDto;
 import com.verhoturkin.votingsystem.util.exception.NotFoundException;
 import com.verhoturkin.votingsystem.util.mapper.RestaurantMapper;
 import com.verhoturkin.votingsystem.web.AbstractRestControllerTest;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.stream.Collectors;
 
 import static com.verhoturkin.votingsystem.RestaurantTestHelper.*;
@@ -34,6 +40,20 @@ class RestaurantControllerTest extends AbstractRestControllerTest {
 
     @Autowired
     private RestaurantMapper mapper;
+
+    @Autowired
+    private CacheManager cacheManager;
+
+    @PersistenceContext
+    private EntityManager em;
+
+    @BeforeEach
+    void setUp() throws Exception {
+        cacheManager.getCache("restaurants").clear();
+        Session s = (Session) em.getDelegate();
+        SessionFactory sf = s.getSessionFactory();
+        sf.getCache().evictAllRegions();
+    }
 
     //Admin part
 
@@ -180,14 +200,6 @@ class RestaurantControllerTest extends AbstractRestControllerTest {
 
     @Test
     void getMenu() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "menu")
-                .param("date", "2015-05-30")
-                .with(userHttpBasic(USER1)))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(writeValue(RESTAURANTS_MENU), true));
-
         mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "menu")
                 .param("date", "2015-05-30")
                 .with(userHttpBasic(USER1)))
