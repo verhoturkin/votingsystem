@@ -19,7 +19,6 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.verhoturkin.votingsystem.config.WebConfig.REST_V1;
@@ -58,10 +57,16 @@ public class DishController {
     }
 
     @GetMapping
-    public List<DishDto> getAll(@PathVariable int restaurantId, @RequestParam(required = false) LocalDate date) {
-        List<Dish> dishes = Objects.isNull(date) ?
-                dishRepository.findAllByRestaurantIdOrderByPriceDesc(restaurantId) :
-                dishRepository.findAllByRestaurantIdAndDateOrderByPriceDesc(restaurantId, date);
+    public List<DishDto> getAll(@PathVariable int restaurantId) {
+        List<Dish> dishes = dishRepository.findAllByRestaurantIdOrderByPriceDesc(restaurantId);
+        return dishes.stream()
+                .map(mapper::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/byDate")
+    public List<DishDto> getAllByDate(@PathVariable int restaurantId, @RequestParam LocalDate date) {
+        List<Dish> dishes = dishRepository.findAllByRestaurantIdAndDateOrderByPriceDesc(restaurantId, date);
         return dishes.stream()
                 .map(mapper::convertToDto)
                 .collect(Collectors.toList());
