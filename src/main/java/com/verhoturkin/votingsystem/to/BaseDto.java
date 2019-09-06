@@ -1,6 +1,8 @@
 package com.verhoturkin.votingsystem.to;
 
-public abstract class BaseDto {
+import java.io.Serializable;
+
+public abstract class BaseDto implements Serializable {
 
     protected Integer id;
 

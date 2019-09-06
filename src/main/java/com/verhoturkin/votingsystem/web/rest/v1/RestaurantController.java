@@ -7,6 +7,8 @@ import com.verhoturkin.votingsystem.to.RestaurantWithDishesDto;
 import com.verhoturkin.votingsystem.util.exception.NotFoundException;
 import com.verhoturkin.votingsystem.util.mapper.RestaurantMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +42,8 @@ public class RestaurantController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    private ResponseEntity<RestaurantDto> create(@RequestBody @Valid RestaurantDto dto) {
+    @CacheEvict(value = "restaurants", allEntries = true)
+    public ResponseEntity<RestaurantDto> create(@RequestBody @Valid RestaurantDto dto) {
         RestaurantDto created = mapper.convertToDto(repository.save(mapper.convertToEntity(dto)));
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_V1 + "/restaurants/{id}")
@@ -64,20 +67,23 @@ public class RestaurantController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CacheEvict(value = "restaurants", allEntries = true)
     public void update(@PathVariable int id, @RequestBody @Valid RestaurantDto dto) {
         repository.save(mapper.convertToEntity(dto));
     }
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CacheEvict(value = "restaurants", allEntries = true)
     public void delete(@PathVariable int id) {
         repository.deleteById(id);
     }
 
     //User part
 
+    @Cacheable(value = "restaurants")
     @GetMapping(value = "/menu", produces = MediaType.APPLICATION_JSON_VALUE)
-    private List<RestaurantWithDishesDto> getMenu(@RequestParam(required = false) LocalDate date) {
+    public List<RestaurantWithDishesDto> getMenu(@RequestParam(required = false) LocalDate date) {
         List<Restaurant> restaurants = repository.findAllWithDishes(
                 Objects.isNull(date) ? LocalDate.now() : date);
 

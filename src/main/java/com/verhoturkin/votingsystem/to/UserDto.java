@@ -5,11 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.util.Objects;
 
-public class UserDto extends BaseDto implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class UserDto extends BaseDto {
+
 
     @NotBlank
     @Size(min = 2, max = 100)

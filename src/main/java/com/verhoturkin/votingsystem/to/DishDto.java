@@ -5,10 +5,12 @@ import org.hibernate.validator.constraints.Range;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class DishDto extends BaseDto {
+public class DishDto extends BaseDto implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @NotBlank
     @Size(min = 2, max = 255)

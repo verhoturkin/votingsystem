@@ -1,10 +1,12 @@
 package com.verhoturkin.votingsystem.to;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class RestaurantWithDishesDto extends RestaurantDto {
+public class RestaurantWithDishesDto extends RestaurantDto implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @NotNull
     private List<DishDto> dishes;

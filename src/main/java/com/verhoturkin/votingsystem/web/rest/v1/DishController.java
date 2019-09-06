@@ -7,6 +7,7 @@ import com.verhoturkin.votingsystem.to.DishDto;
 import com.verhoturkin.votingsystem.util.exception.NotFoundException;
 import com.verhoturkin.votingsystem.util.mapper.DishMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,7 @@ public class DishController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
+    @CacheEvict(value = "restaurants", allEntries = true)
     public ResponseEntity<DishDto> create(@RequestBody @Valid DishDto dishDto, @PathVariable int restaurantId) {
         Dish dish = mapper.convertToEntity(dishDto);
         dish.setRestaurant(restaurantRepository.findById(restaurantId)
@@ -74,6 +76,7 @@ public class DishController {
     @PutMapping(value = "/{dishId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
+    @CacheEvict(value = "restaurants", allEntries = true)
     public void update(@PathVariable int restaurantId, @PathVariable int dishId, @RequestBody @Valid DishDto dishDto) {
         dishRepository.findByIdAndRestaurantId(dishId, restaurantId)
                 .orElseThrow(NotFoundException::new);
@@ -84,6 +87,7 @@ public class DishController {
     @DeleteMapping("/{dishId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
+    @CacheEvict(value = "restaurants", allEntries = true)
     public void delete(@PathVariable int restaurantId, @PathVariable int dishId) {
         dishRepository.findByIdAndRestaurantId(dishId, restaurantId)
                 .orElseThrow(NotFoundException::new);
