@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 import static com.verhoturkin.votingsystem.config.WebConfig.REST_V1;
 
 @RestController
-@RequestMapping(value = REST_V1 + "/restaurants/{restaurantId}/votes", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = REST_V1 + "/votes", produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoteController {
 
     private final VoteMapper mapper;
@@ -36,10 +36,10 @@ public class VoteController {
     }
 
     //Admin Part
-    @GetMapping
+    @GetMapping("/byRestaurant")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<VoteDto> getAll(@PathVariable int restaurantId) {
-        List<Vote> votes = service.findAllByRestaurantId(restaurantId);
+    public List<VoteDto> getByRestaurant(@RequestParam int id) {
+        List<Vote> votes = service.findAllByRestaurantId(id);
         return votes.stream()
                 .map(mapper::convertToDto)
                 .collect(Collectors.toList());
@@ -47,8 +47,8 @@ public class VoteController {
 
     @GetMapping("/byDate")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<VoteDto> getAllByDate(@PathVariable int restaurantId, @RequestParam LocalDate date) {
-        List<Vote> votes = service.findAllByRestaurantIdAndDate(restaurantId, date);
+    public List<VoteDto> getByDate(@RequestParam LocalDate date) {
+        List<Vote> votes = service.findAllByDate(date);
         return votes.stream()
                 .map(mapper::convertToDto)
                 .collect(Collectors.toList());
@@ -59,11 +59,11 @@ public class VoteController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<VoteDto> vote(@AuthenticationPrincipal User user, @PathVariable int restaurantId) {
-        VoteDto created = mapper.convertToDto(service.save(user, restaurantId));
+    public ResponseEntity<VoteDto> vote(@AuthenticationPrincipal User user, @RequestParam int id) {
+        VoteDto created = mapper.convertToDto(service.save(user, id));
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_V1 + "/restaurants/{restaurantId}/votes/{dishId}")
-                .buildAndExpand(restaurantId, created.getId()).toUri();
+                .path(REST_V1 + "/votes/{voteId}")
+                .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
@@ -72,11 +72,4 @@ public class VoteController {
     public VoteDto getCurrent(@AuthenticationPrincipal User user) {
         return mapper.convertToDto(service.get(user));
     }
-
-    @GetMapping("/count")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public long getCount(@PathVariable int restaurantId) {
-        return service.getCount(restaurantId);
-    }
-
 }

@@ -14,7 +14,7 @@ public class VoteTestData {
 
     public static final int VOTE1_ID = 100015;
     public static final VoteDto VOTE1 = new VoteDto(VOTE1_ID, LocalDate.of(2015, 05, 30), USER1_ID, RESTAURANT1_ID);
-    public static final VoteDto VOTE2 = new VoteDto(100016, LocalDate.of(2015, 05, 30), USER2_ID, 100004);
+    public static final VoteDto VOTE2 = new VoteDto(100016, LocalDate.of(2015, 05, 31), USER2_ID, 100004);
 
     public static final List<VoteDto> VOTES = List.of(VOTE2, VOTE1);
 

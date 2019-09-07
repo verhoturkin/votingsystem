@@ -18,8 +18,8 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
 
     long countByDateAndRestaurantId(LocalDate date, int restaurantId);
 
-    List<Vote> findAllByRestaurantId(int restaurantId);
+    List<Vote> findAllByRestaurantIdOrderByDateDesc(int restaurantId);
 
-    List<Vote> findAllByRestaurantIdAndDate(int restaurantId, LocalDate date);
+    List<Vote> findAllByDateOrderByRestaurantIdAsc(LocalDate date);
 }
 

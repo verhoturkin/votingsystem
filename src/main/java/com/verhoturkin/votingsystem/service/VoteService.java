@@ -55,15 +55,11 @@ public class VoteService {
         return repository.findByDateAndUserId(LocalDate.now(clock), user.getId()).orElseThrow(NotFoundException::new);
     }
 
-    public long getCount(int reataurantId) {
-        return repository.countByDateAndRestaurantId(LocalDate.now(clock), reataurantId);
-    }
-
     public List<Vote> findAllByRestaurantId(int restaurantId) {
-        return repository.findAllByRestaurantId(restaurantId);
+        return repository.findAllByRestaurantIdOrderByDateDesc(restaurantId);
     }
 
-    public List<Vote> findAllByRestaurantIdAndDate(int restaurantId, LocalDate date) {
-        return repository.findAllByRestaurantIdAndDate(restaurantId, date);
+    public List<Vote> findAllByDate(LocalDate date) {
+        return repository.findAllByDateOrderByRestaurantIdAsc(date);
     }
 }

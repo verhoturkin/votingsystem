@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/**/register").anonymous()
                 .antMatchers("/**/profile", "/**/menu").hasRole("USER")
-                .antMatchers("/**/users/**", "/**/restaurants/*", "/**/dishes/*").hasRole("ADMIN")
+                .antMatchers("/**/users/**", "/**/restaurants/**").hasRole("ADMIN")
                 .and().httpBasic().authenticationEntryPoint(restAuthEntryPoint())
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable();
