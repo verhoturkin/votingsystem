@@ -38,11 +38,12 @@ Note that you should have to [install JDK 8](http://www.oracle.com/technetwork/j
 
 **User DTO**
 
-Field Name | `type` |  Description
---- |: --- :| ---
-id | `integer` |   Null when create new
-name | `string` |  **REQUIRED**, 2-100 chars
+Field Name | `type` | Description
+--- | --- | ---
+id | `integer` | Null when create new
+name | `string` | **REQUIRED**, 2-100 chars
 email | `string` | **REQUIRED**,  max. 100 chars 
-password | `string`  | **REQUIRED**, 5 to 32 chars 
+password | `string` | **REQUIRED**, 5 to 32 chars 
+
 
 
