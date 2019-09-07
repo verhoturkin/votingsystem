@@ -77,6 +77,35 @@
                     <argLine>-Dfile.encoding=UTF-8</argLine>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.7.5</version>
+                <configuration>
+                    <container>
+                        <containerId>tomcat9x</containerId>
+                        <systemProperties>
+                            <file.encoding>UTF-8</file.encoding>
+                        </systemProperties>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.hsqldb</groupId>
+                                <artifactId>hsqldb</artifactId>
+                            </dependency>
+                        </dependencies>
+                    </container>
+                    <deployables>
+                        <deployable>
+                            <groupId>com.verhoturkin</groupId>
+                            <artifactId>votingsystem</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>${project.build.finalName}</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -247,7 +276,6 @@
             <artifactId>modelmapper</artifactId>
             <version>2.3.2</version>
         </dependency>
-
     </dependencies>
 
     <dependencyManagement>
