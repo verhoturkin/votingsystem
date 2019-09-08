@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import java.util.Objects;
 import java.util.Set;
@@ -45,8 +44,6 @@ public class UserMapper {
             user.setRegistered(oldUser.getRegistered());
         }
 
-        String password = user.getPassword();
-        user.setPassword(StringUtils.hasText(password) ? encoder.encode(password) : password);
         user.setEmail(user.getEmail().toLowerCase());
         return user;
     }

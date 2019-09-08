@@ -20,9 +20,9 @@ public class UserTestHelper {
     public static final User USER2 = new User(USER2_ID, "User2", "user2@yandex.ru", "password", Role.ROLE_USER);
     public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin", Role.ROLE_ADMIN);
 
-    public static final UserDto USER1_DTO = new UserDto(USER1_ID, "User1", "user1@yandex.ru", "{noop}password");
-    public static final UserDto USER2_DTO = new UserDto(USER2_ID, "Юзер2", "user2@yandex.ru", "{noop}password");
-    public static final UserDto ADMIN_DTO = new UserDto(ADMIN_ID, "Admin", "admin@gmail.com", "{noop}admin");
+    public static final UserDto USER1_DTO = new UserDto(USER1_ID, "User1", "user1@yandex.ru", "password");
+    public static final UserDto USER2_DTO = new UserDto(USER2_ID, "Юзер2", "user2@yandex.ru", "password");
+    public static final UserDto ADMIN_DTO = new UserDto(ADMIN_ID, "Admin", "admin@gmail.com", "admin");
 
     public static final List<UserDto> DTOS = List.of(ADMIN_DTO, USER1_DTO, USER2_DTO);
 

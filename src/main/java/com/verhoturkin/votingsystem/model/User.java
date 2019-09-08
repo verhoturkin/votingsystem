@@ -3,6 +3,8 @@ package com.verhoturkin.votingsystem.model;
 import org.hibernate.annotations.BatchSize;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
@@ -19,6 +21,8 @@ import java.util.Set;
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")})
 public class User extends AbstractNamedEntity implements UserDetails {
 
+    private static final PasswordEncoder ENCODER = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
     @Column(name = "email", nullable = false, unique = true)
     @Email
     @NotBlank
@@ -27,7 +31,7 @@ public class User extends AbstractNamedEntity implements UserDetails {
 
     @Column(name = "password", nullable = false)
     @NotBlank
-    @Size(min = 5, max = 100)
+    @Size(min = 5)
     private String password;
 
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()")
@@ -100,7 +104,7 @@ public class User extends AbstractNamedEntity implements UserDetails {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = ENCODER.encode(password);
     }
 
     @Override

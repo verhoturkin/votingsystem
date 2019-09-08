@@ -6,9 +6,9 @@ DELETE FROM users;
 ALTER SEQUENCE GLOBAL_SEQ RESTART WITH 100000;
 
 INSERT INTO users (name, email, password)
-VALUES ('User1', 'user1@yandex.ru', '{noop}password'),
-       ('Юзер2', 'user2@yandex.ru', '{noop}password'),
-       ('Admin', 'admin@gmail.com', '{noop}admin');
+VALUES ('User1', 'user1@yandex.ru', '{bcrypt}$2a$10$AUK/O9NGODoAgrsivmQtq.gxeufkw26DQQKdnt2jD2m5v4QV.X56a'),
+       ('Юзер2', 'user2@yandex.ru', '{bcrypt}$2a$10$wjN9oyqcGA4smpPDnRjyBepOM3VB0IMVJHX6gR5HXkwXLJap8spe6'),
+       ('Admin', 'admin@gmail.com', '{bcrypt}$2a$10$ZVE6fWfcNd28JUdMjh1tZeOKxEDFMjB6wdEhr8LL1rsPGSh3vHNRO');
 
 INSERT INTO user_roles (role, user_id)
 VALUES ('ROLE_USER', 100000),
