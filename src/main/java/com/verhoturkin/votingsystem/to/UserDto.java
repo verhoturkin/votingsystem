@@ -1,24 +1,29 @@
 package com.verhoturkin.votingsystem.to;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
+@ApiModel(value = "UserDTO", description = "User data transfer object.")
 public class UserDto extends BaseDto {
 
-
+    @ApiModelProperty(notes = "Min length = 2, Max length = 255")
     @NotBlank
     @Size(min = 2, max = 100)
     private String name;
 
+    @ApiModelProperty(notes = "Email format. Max length = 255")
     @Email
     @NotBlank
     @Size(max = 100)
     private String email;
 
+    @ApiModelProperty(notes = "Password min 5 chars, max 32 chars")
     @NotBlank
     @Size(min = 5, max = 32)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

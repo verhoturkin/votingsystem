@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class ProfileUserControllerTest extends AbstractRestControllerTest {
 
-    private static final String REST_URL = REST_V1 + "/users/profile";
+    private static final String REST_URL = REST_V1 + "/profile";
 
     @Autowired
     protected UserRepository repository;
@@ -66,7 +66,7 @@ public class ProfileUserControllerTest extends AbstractRestControllerTest {
     void register() throws Exception {
         UserDto expected = new UserDto(null, "New", "new@gmail.com", "newPass");
 
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.post(REST_V1 + "/users/register")
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + "/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonWithPassword(expected, "newPass")))
                 .andDo(print())
@@ -85,7 +85,7 @@ public class ProfileUserControllerTest extends AbstractRestControllerTest {
     @Transactional(propagation = Propagation.NEVER)
     void registerDuplicate() throws Exception {
         UserDto expected = new UserDto(null, "New", "user1@yandex.ru", "newPass");
-        mockMvc.perform(MockMvcRequestBuilders.post(REST_V1 + "/users/register")
+        mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + "/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonWithPassword(expected, "newPass")))
                 .andDo(print())
@@ -96,7 +96,7 @@ public class ProfileUserControllerTest extends AbstractRestControllerTest {
     @Transactional(propagation = Propagation.NEVER)
     void registerInvalid() throws Exception {
         UserDto expected = new UserDto(null, null, "", "newPass");
-        mockMvc.perform(MockMvcRequestBuilders.post(REST_V1 + "/users/register")
+        mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + "/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(writeValue(expected)))
                 .andDo(print())

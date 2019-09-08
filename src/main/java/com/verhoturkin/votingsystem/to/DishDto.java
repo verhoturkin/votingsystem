@@ -1,5 +1,7 @@
 package com.verhoturkin.votingsystem.to;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
@@ -9,16 +11,20 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@ApiModel(value = "DishDTO", description = "Dish data transfer object.")
 public class DishDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(notes = "Min length = 2, Max length = 255")
     @NotBlank
     @Size(min = 2, max = 255)
     private String name;
 
+    @ApiModelProperty(notes = "Date in ISO format ('YYYY-MM-DD')")
     @NotNull
     private LocalDate date;
 
+    @ApiModelProperty(notes = "Min = 1")
     @NotNull
     @Range(min = 1)
     private int price;

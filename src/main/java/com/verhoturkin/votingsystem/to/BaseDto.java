@@ -1,9 +1,12 @@
 package com.verhoturkin.votingsystem.to;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 public abstract class BaseDto implements Serializable {
 
+    @ApiModelProperty(notes = "The database generated ID")
     protected Integer id;
 
     public BaseDto() {

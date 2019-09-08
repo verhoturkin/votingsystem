@@ -1,11 +1,16 @@
 package com.verhoturkin.votingsystem.to;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
+@ApiModel(value = "RestaurantDTO", description = "Restaurant data transfer object.")
 public class RestaurantDto extends BaseDto {
 
+    @ApiModelProperty(notes = "Min length = 2, Max length = 255")
     @NotBlank
     @Size(min = 2, max = 255)
     protected String name;

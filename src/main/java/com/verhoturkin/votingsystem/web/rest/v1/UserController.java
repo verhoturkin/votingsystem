@@ -5,11 +5,11 @@ import com.verhoturkin.votingsystem.repository.UserRepository;
 import com.verhoturkin.votingsystem.to.UserDto;
 import com.verhoturkin.votingsystem.util.exception.NotFoundException;
 import com.verhoturkin.votingsystem.util.mapper.UserMapper;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -20,6 +20,11 @@ import java.util.stream.Collectors;
 
 import static com.verhoturkin.votingsystem.config.WebConfig.REST_V1;
 
+@Api(value = "/users", description = "Operations with Users", authorizations = {@Authorization(value = "basicAuth")}, tags = "/users")
+@ApiResponses(value = {
+        @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
+        @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
+})
 @RestController
 @RequestMapping(value = REST_V1 + "/users", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
@@ -34,12 +39,14 @@ public class UserController {
         this.mapper = modelMapper;
     }
 
-    // Admin part
-
-
+    @ApiOperation(value = "Create", notes = "Accessible by users having one of the following roles: ADMIN")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successfully created", response = UserDto.class),
+            @ApiResponse(code = 422, message = "DTO validation failed")
+    })
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<UserDto> create(@RequestBody @Valid UserDto userDto) {
+    public ResponseEntity<UserDto> create(@ApiParam(value = "User DTO", required = true) @RequestBody @Valid UserDto userDto) {
         UserDto created = mapper.convertToDto(repository.save(mapper.convertToEntity(userDto)));
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_V1 + "/users/{id}")
@@ -47,6 +54,10 @@ public class UserController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
+    @ApiOperation(value = "Get all", notes = "Accessible by users having one of the following roles: ADMIN", tags = "/users")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved list", response = UserDto.class, responseContainer = "List"),
+    })
     @GetMapping
     public List<UserDto> getAll() {
         List<User> users = repository.findAllByOrderByNameAscEmailAsc();
@@ -55,54 +66,48 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
+    @ApiOperation(value = "Get", notes = "Accessible by users having one of the following roles: ADMIN", tags = "/users")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved", response = UserDto.class),
+            @ApiResponse(code = 404, message = "Not found user with given Id")
+    })
     @GetMapping("/{id}")
-    public UserDto get(@PathVariable int id) {
+    public UserDto get(@ApiParam(value = "User ID", required = true) @PathVariable int id) {
         return mapper.convertToDto(repository.findById(id).orElseThrow(NotFoundException::new));
     }
 
+    @ApiOperation(value = "Get by email", notes = "Accessible by users having one of the following roles: ADMIN", tags = "/users")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved", response = UserDto.class),
+            @ApiResponse(code = 404, message = "Not found user with given email")
+    })
     @GetMapping("/by")
-    public UserDto getByEmail(@RequestParam String email) {
+    public UserDto getByEmail(@ApiParam(value = "User email", required = true) @RequestParam String email) {
         return mapper.convertToDto(repository.findByEmail(email).orElseThrow(NotFoundException::new));
     }
 
+    @ApiOperation(value = "Update", notes = "Accessible by users having one of the following roles: ADMIN", tags = "/users")
+    @ApiResponses(value = {
+            @ApiResponse(code = 204, message = "Successfully updated"),
+            @ApiResponse(code = 404, message = "Not found user with given Id"),
+            @ApiResponse(code = 422, message = "DTO validation failed")
+    })
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@RequestBody @Valid UserDto userDto, @PathVariable int id) {
+    public void update(@ApiParam(value = "User DTO", required = true) @RequestBody @Valid UserDto userDto,
+                       @ApiParam(value = "User Id", required = true) @PathVariable int id) {
         repository.save(mapper.convertToEntity(userDto));
     }
 
+    @ApiOperation(value = "Delete", notes = "Accessible by users having one of the following roles: ADMIN", tags = "/users")
+    @ApiResponses(value = {
+            @ApiResponse(code = 204, message = "Successfully deleted"),
+            @ApiResponse(code = 404, message = "Not found user with given Id")
+    })
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id) {
+    public void delete(@ApiParam(value = "User Id", required = true) @PathVariable int id) {
         repository.deleteById(id);
     }
 
-    // User part
-
-    @GetMapping("/profile")
-    public UserDto getProfile(@AuthenticationPrincipal User user) {
-        return mapper.convertToDto(repository.findById(user.getId()).orElseThrow(NotFoundException::new));
-    }
-
-    @DeleteMapping("/profile")
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void deleteProfile(@AuthenticationPrincipal User user) {
-        repository.deleteById(user.getId());
-    }
-
-    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<UserDto> register(@RequestBody @Valid UserDto userDto) {
-        UserDto created = mapper.convertToDto(repository.save(mapper.convertToEntity(userDto)));
-        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_V1 + "/users/{id}")
-                .buildAndExpand(created.getId()).toUri();
-        return ResponseEntity.created(uriOfNewResource).body(created);
-    }
-
-    @PutMapping(value = "/profile", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateProfile(@RequestBody @Valid UserDto userDto, @AuthenticationPrincipal User user) {
-        repository.save(mapper.convertToEntity(userDto));
-    }
 }

@@ -1,13 +1,18 @@
 package com.verhoturkin.votingsystem.to;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
+@ApiModel(value = "RestaurantWithDishesDTO", description = "Restaurant data transfer object with list of DishDTOs")
 public class RestaurantWithDishesDto extends RestaurantDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(notes = "List of DishDTO")
     @NotNull
     private List<DishDto> dishes;
 
