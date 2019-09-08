@@ -27,7 +27,7 @@ Deploy:
 $ mvn clean package
 $ mvn cargo:run
 ```
-Note that you should have to [install JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and [Maven](https://maven.apache.org/install.html) as prerequisite.
+Note that you should have to [install JDK 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html) and [Maven](https://maven.apache.org/install.html) as prerequisite.
 
 ## API v1
 ### Authorization
@@ -39,23 +39,36 @@ User1: user1@yandex.ru : password
 User2: user2@yandex.ru : password
 ```
 ### Users management
-##### User DTO
+#### User DTO
 
 Field Name | `type` | Description
 --- | --- | ---
 id | `integer` | Null when create new
 name | `string` | **REQUIRED**, 2-100 chars
 email | `string` | **REQUIRED**,  max. 100 chars 
-password | `string` | **REQUIRED**, 5 to 32 chars 
+password | `string` | **REQUIRED**,**WRITE-ONLY**, 5 to 32 chars 
 
-#### Commands for admins
+#### Get all users
+----
 
-| Get all | |
-|----------|------------------------------------------------|
-| request  | GET  [/api/v1/users](http://localhost:8080/voting/api/v1/users)  |
-| response |                                                |
-| curl | `curl` |
+| URL | Method | URL Params | Data Params |
+|-----|--------|------------|-------------|
+| [/api/v1/users](http://localhost:8080/voting/api/v1/users) | GET | - | - | 
 
+* **Success Response:**
+  * **Code:** 200 <br />
+    **Content:** `{ id : 12, name : "Michael Bloom" }`
+ * **Error Response:**
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** `{ error : "User doesn't exist" }`
+  OR
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ error : "You are unauthorized to make this request." }`
+
+* **Sample Call:**
+
+  ```
+  ```
 
 
 
