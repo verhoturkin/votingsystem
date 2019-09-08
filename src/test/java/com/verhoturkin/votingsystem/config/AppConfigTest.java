@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import javax.cache.Cache;
 import javax.cache.Caching;
 import javax.cache.configuration.MutableConfiguration;
 import javax.cache.expiry.CreatedExpiryPolicy;
@@ -35,8 +34,8 @@ public class AppConfigTest {
                 .setSkipNullEnabled(true)
                 .setFieldAccessLevel(PRIVATE);
         mapper.createTypeMap(Vote.class, VoteDto.class)
-                .addMapping(vote -> vote.getUser().getId(), VoteDto::setUser_id)
-                .addMapping(vote -> vote.getRestaurant().getId(), VoteDto::setRestaurant_id);
+                .addMapping(vote -> vote.getUser().getId(), VoteDto::setUserId)
+                .addMapping(vote -> vote.getRestaurant().getId(), VoteDto::setRestaurantId);
         return mapper;
     }
 
@@ -49,7 +48,7 @@ public class AppConfigTest {
     public CacheManager cacheManager() {
         MutableConfiguration<Long, String> configuration = new MutableConfiguration<Long, String>()
                 .setExpiryPolicyFactory(CreatedExpiryPolicy.factoryOf(Duration.ONE_DAY));
-        Cache<Long, String> cache = Caching.getCachingProvider().getCacheManager().createCache("restaurants", configuration);
+        Caching.getCachingProvider().getCacheManager().createCache("restaurants", configuration);
         return new JCacheCacheManager(Caching.getCachingProvider().getCacheManager());
 
     }

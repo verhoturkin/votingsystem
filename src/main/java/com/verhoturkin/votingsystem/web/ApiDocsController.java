@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ApiDocsController {
 
     @GetMapping(value = "/api-docs")
-    public String GetDocs() {
+    public String getDocs() {
         return "api-docs";
     }
 }

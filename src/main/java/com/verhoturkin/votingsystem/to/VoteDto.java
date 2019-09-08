@@ -15,20 +15,20 @@ public class VoteDto extends BaseDto {
 
     @ApiModelProperty(notes = "ID of vote's user")
     @NotNull
-    private Integer user_id;
+    private Integer userId;
 
     @ApiModelProperty(notes = "ID of vote's restaurant ")
     @NotNull
-    private Integer restaurant_id;
+    private Integer restaurantId;
 
     public VoteDto() {
     }
 
-    public VoteDto(Integer id, LocalDate date, Integer user_id, Integer restaurant_id) {
+    public VoteDto(Integer id, LocalDate date, Integer userId, Integer restaurantId) {
         super(id);
         this.date = date;
-        this.user_id = user_id;
-        this.restaurant_id = restaurant_id;
+        this.userId = userId;
+        this.restaurantId = restaurantId;
     }
 
     public LocalDate getDate() {
@@ -39,20 +39,20 @@ public class VoteDto extends BaseDto {
         this.date = date;
     }
 
-    public Integer getUser_id() {
-        return user_id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public Integer getRestaurant_id() {
-        return restaurant_id;
+    public Integer getRestaurantId() {
+        return restaurantId;
     }
 
-    public void setRestaurant_id(Integer restaurant_id) {
-        this.restaurant_id = restaurant_id;
+    public void setRestaurantId(Integer restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
 

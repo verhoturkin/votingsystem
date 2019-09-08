@@ -20,7 +20,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import javax.cache.Cache;
 import javax.cache.Caching;
 import javax.cache.configuration.MutableConfiguration;
 import javax.cache.expiry.CreatedExpiryPolicy;
@@ -46,8 +45,8 @@ public class AppConfig {
                 .setSkipNullEnabled(true)
                 .setFieldAccessLevel(PRIVATE);
         mapper.createTypeMap(Vote.class, VoteDto.class)
-                .addMapping(vote -> vote.getUser().getId(), VoteDto::setUser_id)
-                .addMapping(vote -> vote.getRestaurant().getId(), VoteDto::setRestaurant_id);
+                .addMapping(vote -> vote.getUser().getId(), VoteDto::setUserId)
+                .addMapping(vote -> vote.getRestaurant().getId(), VoteDto::setRestaurantId);
         return mapper;
     }
 
@@ -61,7 +60,7 @@ public class AppConfig {
     public CacheManager cacheManager() {
         MutableConfiguration<Long, String> configuration = new MutableConfiguration<Long, String>()
                 .setExpiryPolicyFactory(CreatedExpiryPolicy.factoryOf(Duration.ONE_DAY));
-        Cache<Long, String> cache = Caching.getCachingProvider().getCacheManager().createCache("restaurants", configuration);
+        Caching.getCachingProvider().getCacheManager().createCache("restaurants", configuration);
         return new JCacheCacheManager(Caching.getCachingProvider().getCacheManager());
     }
 

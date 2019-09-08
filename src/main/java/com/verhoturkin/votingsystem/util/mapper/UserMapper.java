@@ -7,7 +7,6 @@ import com.verhoturkin.votingsystem.to.UserDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
@@ -18,14 +17,13 @@ public class UserMapper {
 
     private final ModelMapper mapper;
 
-    private final PasswordEncoder encoder;
+
 
     private final UserRepository repository;
 
     @Autowired
-    public UserMapper(ModelMapper mapper, PasswordEncoder encoder, UserRepository repository) {
+    public UserMapper(ModelMapper mapper, UserRepository repository) {
         this.mapper = mapper;
-        this.encoder = encoder;
         this.repository = repository;
     }
 
