@@ -46,13 +46,14 @@ Field Name | `type` | Description
 id | `integer` | Null when create new
 name | `string` | **REQUIRED**, 2-100 chars
 email | `string` | **REQUIRED**,  max. 100 chars 
-password | `string` | **REQUIRED**, 5 to 32 chars 
+password | `string` | **REQUIRED**, **WRITE-ONLY**, 5 to 32 chars 
 
 #### Commands for admins
 
-| Get all | |
+| Get all |[/api/v1/users](http://localhost:8080/voting/api/v1/users) |
 |----------|------------------------------------------------|
-| request  | GET  [/api/v1/users](http://localhost:8080/voting/api/v1/users)  |
+| request  | method: GET
+body: none |
 | response |                                                |
 | curl | `curl` |
 
