@@ -49,10 +49,12 @@ email | `string` | **REQUIRED**,  max. 100 chars
 password | `string` | **REQUIRED**, 5 to 32 chars 
 
 #### Commands for admins
-##### Get all users
 
-
-/v1/users
+| Get all | |
+|----------|------------------------------------------------|
+| request  | GET  [/api/v1/users](http://localhost:8080/voting/api/v1/users)  |
+| response |                                                |
+| curl | `curl` |
 
 
 
