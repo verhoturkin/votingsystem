@@ -17,6 +17,7 @@ import javax.cache.expiry.CreatedExpiryPolicy;
 import javax.cache.expiry.Duration;
 import java.time.Clock;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.ZoneId;
 
 import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
@@ -41,7 +42,7 @@ public class AppConfigTest {
 
     @Bean
     public Clock clock() {
-        return Clock.fixed(Instant.parse("2015-05-30T11:15:30.00Z"), ZoneId.of("UTC"));
+        return Clock.fixed(Instant.parse(LocalDate.now().toString() + "T11:15:30.00Z"), ZoneId.of("UTC"));
     }
 
     @Bean

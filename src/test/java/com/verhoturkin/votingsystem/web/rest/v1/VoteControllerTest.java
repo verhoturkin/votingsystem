@@ -42,7 +42,7 @@ public class VoteControllerTest extends AbstractRestControllerTest {
     void getAllByDate() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "byDate")
                 .with(userHttpBasic(ADMIN))
-                .param("date", "2015-05-30"))
+                .param("date", LocalDate.now().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -62,7 +62,7 @@ public class VoteControllerTest extends AbstractRestControllerTest {
 
     @Test
     void create() throws Exception {
-        VoteDto expected = new VoteDto(null, LocalDate.of(2015, 05, 30), USER2_ID, RESTAURANT1_ID);
+        VoteDto expected = new VoteDto(null, LocalDate.now(), USER2_ID, RESTAURANT1_ID);
         ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
                 .with(userHttpBasic(USER2))
                 .param("id", "100003"))

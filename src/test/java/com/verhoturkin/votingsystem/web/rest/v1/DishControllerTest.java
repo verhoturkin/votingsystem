@@ -82,7 +82,7 @@ class DishControllerTest extends AbstractRestControllerTest {
     @Test
     void getAllByDate() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "byDate")
-                .param("date", "2015-05-30")
+                .param("date", LocalDate.now().toString())
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isOk())

@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 import static com.verhoturkin.votingsystem.RestaurantTestHelper.*;
@@ -201,7 +202,7 @@ class RestaurantControllerTest extends AbstractRestControllerTest {
     @Test
     void getMenu() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "menu")
-                .param("date", "2015-05-30")
+                .param("date", LocalDate.now().toString())
                 .with(userHttpBasic(USER1)))
                 .andDo(print())
                 .andExpect(status().isOk())

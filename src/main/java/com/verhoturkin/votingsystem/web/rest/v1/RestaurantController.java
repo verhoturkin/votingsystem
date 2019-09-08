@@ -19,7 +19,6 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.verhoturkin.votingsystem.config.WebConfig.REST_V1;
@@ -83,9 +82,8 @@ public class RestaurantController {
 
     @Cacheable(value = "restaurants")
     @GetMapping(value = "/menu", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<RestaurantWithDishesDto> getMenu(@RequestParam(required = false) LocalDate date) {
-        List<Restaurant> restaurants = repository.findAllWithDishes(
-                Objects.isNull(date) ? LocalDate.now() : date);
+    public List<RestaurantWithDishesDto> getMenu() {
+        List<Restaurant> restaurants = repository.findAllWithDishes(LocalDate.now());
 
         return restaurants.stream()
                 .map(mapper::convertToDtoWithDishes)
