@@ -24,7 +24,7 @@ public class DishDto extends BaseDto implements Serializable {
     @NotNull
     private LocalDate date;
 
-    @ApiModelProperty(notes = "Min = 1")
+    @ApiModelProperty(notes = "Price in cents. Min = 1")
     @NotNull
     @Range(min = 1)
     private int price;
