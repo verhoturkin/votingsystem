@@ -5,20 +5,14 @@ import com.verhoturkin.votingsystem.to.RestaurantDto;
 import com.verhoturkin.votingsystem.util.exception.NotFoundException;
 import com.verhoturkin.votingsystem.util.mapper.RestaurantMapper;
 import com.verhoturkin.votingsystem.web.AbstractRestControllerTest;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
 
@@ -41,20 +35,6 @@ class RestaurantControllerTest extends AbstractRestControllerTest {
 
     @Autowired
     private RestaurantMapper mapper;
-
-    @Autowired
-    private CacheManager cacheManager;
-
-    @PersistenceContext
-    private EntityManager em;
-
-    @BeforeEach
-    void setUp() throws Exception {
-        cacheManager.getCache("restaurants").clear();
-        Session s = (Session) em.getDelegate();
-        SessionFactory sf = s.getSessionFactory();
-        sf.getCache().evictAllRegions();
-    }
 
     //Admin part
 

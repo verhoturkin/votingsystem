@@ -4,9 +4,6 @@ import com.verhoturkin.votingsystem.model.Vote;
 import com.verhoturkin.votingsystem.to.VoteDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.jcache.JCacheCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -20,10 +17,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import javax.cache.Caching;
-import javax.cache.configuration.MutableConfiguration;
-import javax.cache.expiry.CreatedExpiryPolicy;
-import javax.cache.expiry.Duration;
 import java.time.Clock;
 import java.util.List;
 
@@ -32,7 +25,6 @@ import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 
 @Configuration
 @ComponentScan({"com.verhoturkin.**.config", "com.verhoturkin.**.service", "com.verhoturkin.**.mapper"})
-@EnableCaching
 @EnableSwagger2
 public class AppConfig {
 
@@ -53,15 +45,6 @@ public class AppConfig {
     @Bean
     public Clock clock() {
         return Clock.systemDefaultZone();
-    }
-
-
-    @Bean
-    public CacheManager cacheManager() {
-        MutableConfiguration<Long, String> configuration = new MutableConfiguration<Long, String>()
-                .setExpiryPolicyFactory(CreatedExpiryPolicy.factoryOf(Duration.ONE_DAY));
-        Caching.getCachingProvider().getCacheManager().createCache("restaurants", configuration);
-        return new JCacheCacheManager(Caching.getCachingProvider().getCacheManager());
     }
 
     @Bean

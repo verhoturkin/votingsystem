@@ -18,12 +18,10 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-import static org.hibernate.cache.jcache.ConfigSettings.PROVIDER;
 import static org.hibernate.cfg.AvailableSettings.*;
 
 
@@ -108,11 +106,6 @@ public class DbConfig {
         properties.setProperty(SHOW_SQL, showSql);
         properties.setProperty(FORMAT_SQL, "true");
         properties.setProperty(USE_SQL_COMMENTS, "true");
-        properties.setProperty(JPA_PROXY_COMPLIANCE, "false");
-        properties.setProperty(CACHE_REGION_FACTORY, "org.hibernate.cache.jcache.internal.JCacheRegionFactory");
-        properties.setProperty(PROVIDER, "org.ehcache.jsr107.EhcacheCachingProvider");
-        properties.setProperty(USE_SECOND_LEVEL_CACHE, "true");
-        properties.setProperty(USE_QUERY_CACHE, "false");
         properties.setProperty(DIALECT, "org.hibernate.dialect.HSQLDialect");
 
         return properties;

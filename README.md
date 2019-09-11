@@ -40,6 +40,9 @@ Admin: admin@gmail.com : admin
 User1: user1@yandex.ru : password
 User2: user2@yandex.ru : password
 ```
+#### get Menu
+`curl -s http://localhost:8080/voting/api/v1/restaurants/menu --user user1@yandex.ru:password`
+
 
 
 

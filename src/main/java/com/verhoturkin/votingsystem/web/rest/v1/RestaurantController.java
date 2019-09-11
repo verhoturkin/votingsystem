@@ -8,8 +8,6 @@ import com.verhoturkin.votingsystem.util.exception.NotFoundException;
 import com.verhoturkin.votingsystem.util.mapper.RestaurantMapper;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +50,6 @@ public class RestaurantController {
     })
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    @CacheEvict(value = "restaurants", allEntries = true)
     public ResponseEntity<RestaurantDto> create(@ApiParam(value = "Restaurant DTO", required = true) @RequestBody @Valid RestaurantDto dto) {
         RestaurantDto created = mapper.convertToDto(repository.save(mapper.convertToEntity(dto)));
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -92,7 +89,6 @@ public class RestaurantController {
     })
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CacheEvict(value = "restaurants", allEntries = true)
     public void update(@ApiParam(value = "Restaurant Id", required = true) @PathVariable int id,
                        @ApiParam(value = "Restaurant DTO", required = true) @RequestBody @Valid RestaurantDto dto) {
         repository.save(mapper.convertToEntity(dto));
@@ -105,7 +101,6 @@ public class RestaurantController {
     })
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @CacheEvict(value = "restaurants", allEntries = true)
     public void delete(@ApiParam(value = "Restaurant ID", required = true) @PathVariable int id) {
         repository.deleteById(id);
     }
@@ -116,7 +111,6 @@ public class RestaurantController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved list", response = RestaurantWithDishesDto.class),
     })
-    @Cacheable(value = "restaurants")
     @GetMapping(value = "/menu", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<RestaurantWithDishesDto> getMenu() {
         List<Restaurant> restaurants = repository.findAllWithDishes(LocalDate.now());

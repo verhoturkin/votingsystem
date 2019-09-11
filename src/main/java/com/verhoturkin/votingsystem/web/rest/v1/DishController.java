@@ -113,7 +113,6 @@ public class DishController {
     @PutMapping(value = "/{dishId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
-    @CacheEvict(value = "restaurants", allEntries = true)
     public void update(@ApiParam(value = "Restaurant Id", required = true) @PathVariable int restaurantId,
                        @ApiParam(value = "Dish Id", required = true) @PathVariable int dishId,
                        @ApiParam(value = "DishDTO", required = true) @RequestBody @Valid DishDto dishDto) {
@@ -131,7 +130,6 @@ public class DishController {
     @DeleteMapping("/{dishId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
-    @CacheEvict(value = "restaurants", allEntries = true)
     public void delete(@ApiParam(value = "Restaurant Id", required = true) @PathVariable int restaurantId,
                        @ApiParam(value = "Dish Id", required = true) @PathVariable int dishId) {
         dishRepository.findByIdAndRestaurantId(dishId, restaurantId)
