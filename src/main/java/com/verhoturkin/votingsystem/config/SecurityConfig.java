@@ -20,8 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
         prePostEnabled = true,
-        securedEnabled = true,
-        jsr250Enabled = true)
+        securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService detailsService;
@@ -36,9 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/**/register").anonymous()
-                .antMatchers("**/votes").authenticated()
-                .antMatchers("/**/profile", "/**/menu").hasRole("USER")
-                .antMatchers("/**/users/**", "/**/restaurants/**").hasRole("ADMIN")
+                .antMatchers("/**/profile", "/**/menu", "/**/votes","/**/current").hasRole("USER")
+                .antMatchers("/**/users/**", "/**/restaurants/**", "/**/byDate", "/**/byRestaurant").hasRole("ADMIN")
                 .and().exceptionHandling().accessDeniedHandler(new RestResponseExceptionHandler())
                 .and().httpBasic().authenticationEntryPoint(restAuthEntryPoint())
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -45,7 +44,6 @@ public class VoteController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved list", response = VoteDto.class, responseContainer = "List")})
     @GetMapping("/byRestaurant")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<VoteDto> getByRestaurant(@ApiParam(value = "Restaurant Id which votes to get", required = true) @RequestParam int id) {
         List<Vote> votes = service.findAllByRestaurantId(id);
         return votes.stream()
@@ -57,7 +55,6 @@ public class VoteController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved list", response = VoteDto.class, responseContainer = "List")})
     @GetMapping("/byDate")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<VoteDto> getByDate(@ApiParam(value = "Date in ISO format ('YYYY-MM-DD')", required = true) @RequestParam LocalDate date) {
         List<Vote> votes = service.findAllByDate(date);
         return votes.stream()
@@ -73,7 +70,6 @@ public class VoteController {
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<VoteDto> vote(@AuthenticationPrincipal User user,
                                         @ApiParam(value = "Restaurant Id to vote for", required = true) @RequestParam int id) {
         VoteDto created = mapper.convertToDto(service.save(user, id));
@@ -88,7 +84,6 @@ public class VoteController {
             @ApiResponse(code = 200, message = "Successfully retrieved", response = VoteDto.class),
             @ApiResponse(code = 404, message = "Current user's vote not found")})
     @GetMapping("/current")
-    @PreAuthorize("hasRole('ROLE_USER')")
     public VoteDto getCurrent(@AuthenticationPrincipal User user) {
         return mapper.convertToDto(service.get(user));
     }
