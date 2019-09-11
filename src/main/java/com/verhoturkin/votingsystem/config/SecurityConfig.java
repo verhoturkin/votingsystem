@@ -2,6 +2,7 @@ package com.verhoturkin.votingsystem.config;
 
 
 import com.verhoturkin.votingsystem.web.RestAuthenticationEntryPoint;
+import com.verhoturkin.votingsystem.web.RestResponseExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,8 +36,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/**/register").anonymous()
+                .antMatchers("**/votes").authenticated()
                 .antMatchers("/**/profile", "/**/menu").hasRole("USER")
                 .antMatchers("/**/users/**", "/**/restaurants/**").hasRole("ADMIN")
+                .and().exceptionHandling().accessDeniedHandler(new RestResponseExceptionHandler())
                 .and().httpBasic().authenticationEntryPoint(restAuthEntryPoint())
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable();

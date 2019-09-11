@@ -109,7 +109,7 @@ public class User extends AbstractNamedEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return email;
     }
 
     @Override
