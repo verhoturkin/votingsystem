@@ -35,14 +35,12 @@ public class VoteService {
 
     public Vote save(User user, int restaurantId) {
         LocalDate now = LocalDate.now(clock);
-
-        boolean expired = LocalTime.now(clock).isAfter(STOP);
         Restaurant restaurant = restaurantRepository.findById(restaurantId).orElseThrow(NotFoundException::new);
 
         Vote vote = repository.findByDateAndUserId(now, user.getId())
                 .orElse(new Vote(null, LocalDate.now(clock), user, restaurant));
 
-        if (!vote.isNew() && expired) {
+        if (!vote.isNew() && LocalTime.now(clock).isAfter(STOP)) {
             throw new VotingTimeExpiredException();
         } else {
             vote.setRestaurant(restaurant);
